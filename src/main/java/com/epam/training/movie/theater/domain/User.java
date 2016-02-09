@@ -13,13 +13,23 @@ import org.joda.time.DateTime;
  * @author Alyx
  */
 public class User {
+    private DateTime birthDay;
+    private List<Ticket> tickets;
 
     public DateTime getBirthDay() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return birthDay;
     }
 
     public List<Ticket> getTickets() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return tickets;
+    }
+
+    public void setBirthDay(DateTime birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
     
 }

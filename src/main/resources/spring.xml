@@ -11,5 +11,6 @@
  		http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
     <import resource="discount.xml"/>
+    <import resource="auditories.xml"/>
     
 </beans>

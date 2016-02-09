@@ -28,7 +28,6 @@ public class AuditoriumService {
             seatsNumber += auditorium.getNumberOfSeats();
             vipSeats.put(auditorium.getName(), auditorium.getVipSeats());
         }
-
     }
 
     public List<Auditorium> getAuditoriums() {
