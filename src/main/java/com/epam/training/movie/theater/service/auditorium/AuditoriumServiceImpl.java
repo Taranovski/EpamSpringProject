@@ -5,6 +5,7 @@
  */
 package com.epam.training.movie.theater.service.auditorium;
 
+import com.epam.training.movie.theater.service.AuditoriumService;
 import com.epam.training.movie.theater.domain.Auditorium;
 import java.util.HashMap;
 import java.util.List;
@@ -15,13 +16,13 @@ import java.util.Map;
  *
  * @author Alyx
  */
-public class AuditoriumService {
+public class AuditoriumServiceImpl implements AuditoriumService {
 
     private List<Auditorium> auditoriums;
     private int seatsNumber;
     private Map<String, List<Integer>> vipSeats;
 
-    public AuditoriumService(List<Auditorium> auditoriums) {
+    public AuditoriumServiceImpl(List<Auditorium> auditoriums) {
         this.auditoriums = auditoriums;
         vipSeats = new HashMap<>();
         for (Auditorium auditorium : auditoriums) {
@@ -30,6 +31,7 @@ public class AuditoriumService {
         }
     }
 
+    @Override
     public List<Auditorium> getAuditoriums() {
         return auditoriums;
     }
@@ -38,10 +40,12 @@ public class AuditoriumService {
         this.auditoriums = auditoriums;
     }
 
+    @Override
     public int getSeatsNumber() {
         return seatsNumber;
     }
 
+    @Override
     public Map<String, List<Integer>> getVipSeats() {
         return vipSeats;
     }

@@ -5,21 +5,20 @@
  */
 package com.epam.training.movie.theater.service;
 
-import com.epam.training.movie.theater.domain.Event;
+import com.epam.training.movie.theater.domain.Auditorium;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Alyx
  */
-public interface EventService {
+public interface AuditoriumService {
 
-    Event create(Event event);
+    List<Auditorium> getAuditoriums();
 
-    void remove(Event event);
+    int getSeatsNumber();
 
-    List<Event> getByName(String name);
-
-    List<Event> getAll();
+    Map<String, List<Integer>> getVipSeats();
     
 }

@@ -5,6 +5,7 @@
  */
 package com.epam.training.movie.theater.service.discount;
 
+import com.epam.training.movie.theater.service.DiscountService;
 import com.epam.training.movie.theater.service.discount.strategy.DiscountStrategy;
 import com.epam.training.movie.theater.domain.Event;
 import com.epam.training.movie.theater.domain.User;
@@ -16,7 +17,7 @@ import org.joda.time.DateTime;
  *
  * @author Alyx
  */
-public class DiscountService {
+public class DiscountServiceImpl implements DiscountService {
 
     private List<DiscountStrategy> discountStrategies;
 
@@ -36,6 +37,7 @@ public class DiscountService {
      * @param date
      * @return
      */
+    @Override
     public double getDiscount(User user, Event event, DateTime date) {
         double maxDiscount = 0;
         for (DiscountStrategy discountStrategy : discountStrategies) {

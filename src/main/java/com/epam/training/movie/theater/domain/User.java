@@ -5,7 +5,6 @@
  */
 package com.epam.training.movie.theater.domain;
 
-import java.util.List;
 import org.joda.time.DateTime;
 
 /**
@@ -13,23 +12,41 @@ import org.joda.time.DateTime;
  * @author Alyx
  */
 public class User {
+    private Long id;
+    private String name;
+    private String email;
     private DateTime birthDay;
-    private List<Ticket> tickets;
 
     public DateTime getBirthDay() {
         return birthDay;
-    }
-
-    public List<Ticket> getTickets() {
-        return tickets;
     }
 
     public void setBirthDay(DateTime birthDay) {
         this.birthDay = birthDay;
     }
 
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+    public Long getId() {
+        return id;
     }
-    
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

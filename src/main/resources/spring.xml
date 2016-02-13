@@ -10,7 +10,35 @@
  		http://www.springframework.org/schema/util
  		http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
-    <import resource="discount.xml"/>
+    
     <import resource="auditories.xml"/>
+    
+    <bean id="userDao" class="com.epam.training.movie.theater.dao.UserDao"/>
+    <bean id="ticketDao" class="com.epam.training.movie.theater.dao.TicketDao"/>
+    
+    <bean id="userService" class="com.epam.training.movie.theater.service.user.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="ticketDao" ref="ticketDao"/>
+    </bean>
+    
+    <bean id="birthDayDiscountStrategy" 
+          class="com.epam.training.movie.theater.service.discount.strategy.impl.BirthDayDiscountStrategy" />
+
+    <bean id="tenthTicketDiscountStrategy" 
+          class="com.epam.training.movie.theater.service.discount.strategy.impl.TenthTicketDiscountStrategy" >
+        <property name="userService" ref="userService"/>
+    </bean>
+    
+    <bean id="discountService" 
+          class="com.epam.training.movie.theater.service.discount.DiscountServiceImpl" 
+          depends-on="birthDayDiscountStrategy, tenthTicketDiscountStrategy">
+        <property name="discountStrategies">
+            <list>
+                <ref bean="birthDayDiscountStrategy"/>
+                <ref bean="tenthTicketDiscountStrategy"/>
+            </list>
+        </property>
+    </bean>
+    
     
 </beans>

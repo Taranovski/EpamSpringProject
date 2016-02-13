@@ -23,13 +23,13 @@ import org.springframework.test.context.support.GenericXmlContextLoader;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        locations = {"/auditories-test.xml"},
+        locations = {"/auditories.xml"},
         loader = GenericXmlContextLoader.class
 )
 public class AuditoriumServiceTest {
 
     @Autowired
-    AuditoriumService auditoriumService;
+    AuditoriumServiceImpl auditoriumService;
 
     public AuditoriumServiceTest() {
     }

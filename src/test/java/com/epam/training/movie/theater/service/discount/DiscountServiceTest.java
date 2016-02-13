@@ -25,13 +25,13 @@ import org.springframework.test.context.support.GenericXmlContextLoader;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        locations = {"/discount-test.xml"},
+        locations = {"/spring.xml"},
         loader = GenericXmlContextLoader.class
 )
 public class DiscountServiceTest {
 
     @Autowired
-    DiscountService discountService;
+    DiscountServiceImpl discountService;
 
     public DiscountServiceTest() {
     }
