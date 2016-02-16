@@ -10,6 +10,7 @@ import com.epam.training.movie.theater.domain.Event;
 import com.epam.training.movie.theater.domain.Ticket;
 import com.epam.training.movie.theater.domain.User;
 import com.epam.training.movie.theater.service.UserService;
+import java.math.BigDecimal;
 import java.util.List;
 import org.joda.time.DateTime;
 
@@ -23,14 +24,14 @@ public class TenthTicketDiscountStrategy implements DiscountStrategy {
     private UserService userService;
 
     @Override
-    public double getDiscount(User user, Event event, DateTime date) {
+    public BigDecimal getDiscount(User user, Event event, DateTime date) {
         List<Ticket> tickets = userService.getBookedTickets(user);
         int ticketCount = tickets.size();
 
         if (ticketCount % 10 == 9) {
-            return 0.5;
+            return new BigDecimal("0.5");
         }
-        return 0;
+        return BigDecimal.ZERO;
     }
 
     public UserService getUserService() {

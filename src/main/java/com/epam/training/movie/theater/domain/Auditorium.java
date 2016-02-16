@@ -5,7 +5,9 @@
  */
 package com.epam.training.movie.theater.domain;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -13,14 +15,22 @@ import java.util.List;
  */
 public class Auditorium {
 
+    private Long id;
     private String name;
     private int numberOfSeats;
-    private List<Integer> vipSeats;
+    private Map<Integer, Boolean> vipSeats = new HashMap<>();
+    private Map<Integer, Boolean> seats = new HashMap<>();
 
     public Auditorium(String name, int numberOfSeats, List<Integer> vipSeats) {
         this.name = name;
         this.numberOfSeats = numberOfSeats;
-        this.vipSeats = vipSeats;
+        for (int i = 0; i < numberOfSeats; i++) {
+            if (vipSeats.contains(i)) {
+                this.vipSeats.put(i, Boolean.TRUE);
+            } else {
+                this.seats.put(i, Boolean.TRUE);
+            }
+        }
     }
 
     public String getName() {
@@ -39,12 +49,23 @@ public class Auditorium {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public List<Integer> getVipSeats() {
+    public Map<Integer, Boolean> getVipSeats() {
         return vipSeats;
     }
 
-    public void setVipSeats(List<Integer> vipSeats) {
-        this.vipSeats = vipSeats;
+    public Map<Integer, Boolean> getSeats() {
+        return seats;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isVipSeat(int seat) {
+        return vipSeats.containsKey(seat);
+    }
 }

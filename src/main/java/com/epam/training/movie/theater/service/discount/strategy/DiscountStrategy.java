@@ -7,6 +7,7 @@ package com.epam.training.movie.theater.service.discount.strategy;
 
 import com.epam.training.movie.theater.domain.Event;
 import com.epam.training.movie.theater.domain.User;
+import java.math.BigDecimal;
 import org.joda.time.DateTime;
 
 /**
@@ -16,6 +17,6 @@ import org.joda.time.DateTime;
  */
 public interface DiscountStrategy {
 
-    double getDiscount(User user, Event event, DateTime date);
+    BigDecimal getDiscount(User user, Event event, DateTime date);
 
 }

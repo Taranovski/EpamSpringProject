@@ -3,22 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.epam.training.movie.theater.service;
+package com.epam.training.movie.theater.dao;
 
 import com.epam.training.movie.theater.domain.Auditorium;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
  * @author Alyx
  */
-public interface AuditoriumService {
+public interface AuditoriumDao {
 
-    List<Auditorium> getAuditoriums();
+    List<Auditorium> getAllAuditoriums();
 
-    int getSeatsNumber();
+    Auditorium getById(Long id);
 
-    Map<String, List<Integer>> getVipSeats();
-    
+    Auditorium getByName(String name);
 }

@@ -12,10 +12,12 @@ import org.joda.time.DateTime;
  * @author Alyx
  */
 public class User {
+
     private Long id;
     private String name;
     private String email;
     private DateTime birthDay;
+    private boolean registered;
 
     public DateTime getBirthDay() {
         return birthDay;
@@ -47,6 +49,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
     }
 
 }

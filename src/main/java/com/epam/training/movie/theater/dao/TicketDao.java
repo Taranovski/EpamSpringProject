@@ -7,15 +7,18 @@ package com.epam.training.movie.theater.dao;
 
 import com.epam.training.movie.theater.domain.Ticket;
 import java.util.List;
+import org.joda.time.DateTime;
 
 /**
  *
  * @author Alyx
  */
-public class TicketDao {
+public interface TicketDao {
 
-    public List<Ticket> getTicketsByUserId(Long userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+    List<Ticket> getTicketsByUserId(Long userId);
+
+    List<Ticket> getTicketsForMovieAndDate(String name, DateTime date);
+
+    Ticket save(Ticket ticket);
+
 }

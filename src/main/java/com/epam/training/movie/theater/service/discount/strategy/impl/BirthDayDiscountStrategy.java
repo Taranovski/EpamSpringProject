@@ -8,6 +8,7 @@ package com.epam.training.movie.theater.service.discount.strategy.impl;
 import com.epam.training.movie.theater.service.discount.strategy.DiscountStrategy;
 import com.epam.training.movie.theater.domain.Event;
 import com.epam.training.movie.theater.domain.User;
+import java.math.BigDecimal;
 import org.joda.time.DateTime;
 
 /**
@@ -18,13 +19,13 @@ import org.joda.time.DateTime;
 public class BirthDayDiscountStrategy implements DiscountStrategy {
 
     @Override
-    public double getDiscount(User user, Event event, DateTime date) {
+    public BigDecimal getDiscount(User user, Event event, DateTime date) {
         DateTime birthDay = user.getBirthDay();
         if (birthDay.getMonthOfYear() == date.getMonthOfYear()
                 && birthDay.getDayOfMonth() == date.getDayOfMonth()) {
-            return 0.05;
+            return new BigDecimal("0.05");
         }
-        return 0;
+        return BigDecimal.ZERO;
     }
 
 }

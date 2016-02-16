@@ -13,8 +13,8 @@
     
     <import resource="auditories.xml"/>
     
-    <bean id="userDao" class="com.epam.training.movie.theater.dao.UserDao"/>
-    <bean id="ticketDao" class="com.epam.training.movie.theater.dao.TicketDao"/>
+    <bean id="userDao" class="com.epam.training.movie.theater.dao.impl.UserDaoImpl"/>
+    <bean id="ticketDao" class="com.epam.training.movie.theater.dao.impl.TicketDaoImpl"/>
     
     <bean id="userService" class="com.epam.training.movie.theater.service.user.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
@@ -40,5 +40,6 @@
         </property>
     </bean>
     
+    <!--<bean id="priceCalculationService" class=""></bean>-->
     
 </beans>

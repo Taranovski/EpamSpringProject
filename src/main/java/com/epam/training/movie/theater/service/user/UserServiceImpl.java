@@ -5,8 +5,8 @@
  */
 package com.epam.training.movie.theater.service.user;
 
-import com.epam.training.movie.theater.dao.TicketDao;
-import com.epam.training.movie.theater.dao.UserDao;
+import com.epam.training.movie.theater.dao.impl.TicketDaoImpl;
+import com.epam.training.movie.theater.dao.impl.UserDaoImpl;
 import com.epam.training.movie.theater.domain.Ticket;
 import com.epam.training.movie.theater.domain.User;
 import com.epam.training.movie.theater.service.UserService;
@@ -19,8 +19,8 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao;
-    private TicketDao ticketDao;
+    private UserDaoImpl userDao;
+    private TicketDaoImpl ticketDao;
 
     @Override
     public User register(User user) {
@@ -53,19 +53,19 @@ public class UserServiceImpl implements UserService {
         return ticketDao.getTicketsByUserId(userId);
     }
 
-    public UserDao getUserDao() {
+    public UserDaoImpl getUserDao() {
         return userDao;
     }
 
-    public void setUserDao(UserDao userDao) {
+    public void setUserDao(UserDaoImpl userDao) {
         this.userDao = userDao;
     }
 
-    public TicketDao getTicketDao() {
+    public TicketDaoImpl getTicketDao() {
         return ticketDao;
     }
 
-    public void setTicketDao(TicketDao ticketDao) {
+    public void setTicketDao(TicketDaoImpl ticketDao) {
         this.ticketDao = ticketDao;
     }
 

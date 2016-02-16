@@ -7,7 +7,7 @@ package com.epam.training.movie.theater.service;
 
 import com.epam.training.movie.theater.domain.Event;
 import com.epam.training.movie.theater.domain.User;
-import org.joda.time.DateTime;
+import java.math.BigDecimal;
 
 /**
  *
@@ -20,9 +20,8 @@ public interface DiscountService {
      *
      * @param user
      * @param event
-     * @param date
      * @return
      */
-    double getDiscount(User user, Event event, DateTime date);
-    
+    BigDecimal getDiscount(User user, Event event);
+
 }

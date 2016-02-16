@@ -13,9 +13,9 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:red.properties</value>
-                <value>classpath:green.properties</value>
-                <value>classpath:blue.properties</value>
+                <value>classpath:auditorium/red.properties</value>
+                <value>classpath:auditorium/green.properties</value>
+                <value>classpath:auditorium/blue.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="true" />
@@ -61,14 +61,29 @@
     </bean>
 
     <bean id="auditoriumService" 
-          class="com.epam.training.movie.theater.service.auditorium.AuditoriumService" 
+          class="com.epam.training.movie.theater.dao.impl.AuditoriumDaoImpl" 
           depends-on="redAuditorium, greenAuditorium, blueAuditorium">
         <constructor-arg>
-            <list>
-                <ref bean="redAuditorium"/>
-                <ref bean="greenAuditorium"/>
-                <ref bean="blueAuditorium"/>
-            </list>
+            <map>
+                <entry>
+                    <key>
+                        <value>1</value>
+                    </key>
+                    <ref bean="redAuditorium"/>
+                </entry>
+                <entry>
+                    <key>
+                        <value>2</value>
+                    </key>
+                    <ref bean="greenAuditorium"/>
+                </entry>
+                <entry>
+                    <key>
+                        <value>3</value>
+                    </key>
+                    <ref bean="blueAuditorium"/>
+                </entry>
+            </map>
         </constructor-arg>
     </bean>
     

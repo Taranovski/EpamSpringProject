@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.epam.training.movie.theater.service.auditorium;
+package com.epam.training.movie.theater.dao.impl;
 
 import com.epam.training.movie.theater.domain.Auditorium;
 import java.util.List;
@@ -26,12 +26,12 @@ import org.springframework.test.context.support.GenericXmlContextLoader;
         locations = {"/auditories.xml"},
         loader = GenericXmlContextLoader.class
 )
-public class AuditoriumServiceTest {
+public class AuditoriumDaoTest {
 
     @Autowired
-    AuditoriumServiceImpl auditoriumService;
+    AuditoriumDaoImpl auditoriumService;
 
-    public AuditoriumServiceTest() {
+    public AuditoriumDaoTest() {
     }
 
     @Before
@@ -44,11 +44,11 @@ public class AuditoriumServiceTest {
 
     @Test
     public void shouldFillAuditoriumServiceWithAuditories() {
-        List<Auditorium> auditoriums = auditoriumService.getAuditoriums();
-        
+        List<Auditorium> auditoriums = auditoriumService.getAllAuditoriums();
+
         assertNotNull(auditoriums);
         assertEquals(3, auditoriums.size());
-        
+
         assertEquals("Red blood", auditoriums.get(0).getName());
         assertEquals("Green grass", auditoriums.get(1).getName());
         assertEquals("Blue sky", auditoriums.get(2).getName());

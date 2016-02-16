@@ -6,20 +6,15 @@
 package com.epam.training.movie.theater.service;
 
 import com.epam.training.movie.theater.domain.Event;
-import java.util.List;
+import com.epam.training.movie.theater.domain.User;
+import java.math.BigDecimal;
 
 /**
  *
  * @author Alyx
  */
-public interface EventService {
+public interface PriceCalculationService {
 
-    Event create(Event event);
+    BigDecimal getPrice(Event event, User user, Integer[] seats);
 
-    void remove(Event event);
-
-    List<Event> getByName(String name);
-
-    List<Event> getAll();
-    
 }

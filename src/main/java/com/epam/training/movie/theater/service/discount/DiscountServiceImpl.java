@@ -9,6 +9,7 @@ import com.epam.training.movie.theater.service.DiscountService;
 import com.epam.training.movie.theater.service.discount.strategy.DiscountStrategy;
 import com.epam.training.movie.theater.domain.Event;
 import com.epam.training.movie.theater.domain.User;
+import java.math.BigDecimal;
 import java.util.List;
 import org.joda.time.DateTime;
 
@@ -34,15 +35,14 @@ public class DiscountServiceImpl implements DiscountService {
      *
      * @param user
      * @param event
-     * @param date
      * @return
      */
     @Override
-    public double getDiscount(User user, Event event, DateTime date) {
-        double maxDiscount = 0;
+    public BigDecimal getDiscount(User user, Event event) {
+        BigDecimal maxDiscount = BigDecimal.ZERO;
         for (DiscountStrategy discountStrategy : discountStrategies) {
-            double tempDiscount = discountStrategy.getDiscount(user, event, date);
-            if (tempDiscount > maxDiscount) {
+            BigDecimal tempDiscount = discountStrategy.getDiscount(user, event, event.getStartTime());
+            if (tempDiscount.compareTo(maxDiscount) > 0) {
                 maxDiscount = tempDiscount;
             }
         }
