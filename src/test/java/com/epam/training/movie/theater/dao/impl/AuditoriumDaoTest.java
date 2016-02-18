@@ -23,7 +23,7 @@ import org.springframework.test.context.support.GenericXmlContextLoader;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        locations = {"/auditories.xml"},
+        locations = {"/spring.xml"},
         loader = GenericXmlContextLoader.class
 )
 public class AuditoriumDaoTest {

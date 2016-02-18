@@ -11,10 +11,87 @@
  		http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
     
-    <import resource="auditories.xml"/>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:auditorium/red.properties</value>
+                <value>classpath:auditorium/green.properties</value>
+                <value>classpath:auditorium/blue.properties</value>
+                <value>classpath:pricing.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true" />
+    </bean>
+    
+    <util:list id="redVipSeats">
+        <value>1</value>
+        <value>2</value>
+        <value>3</value>
+    </util:list>
+    
+    <bean id="redAuditorium" 
+          class="com.epam.training.movie.theater.domain.Auditorium" >
+        <constructor-arg value="${red.name}"/>
+        <constructor-arg value="${red.seats}"/>
+        <constructor-arg ref="redVipSeats"/>
+    </bean>
+
+    <util:list id="greenVipSeats">
+        <value>7</value>
+        <value>8</value>
+        <value>9</value>
+    </util:list>
+    
+    <bean id="greenAuditorium" 
+          class="com.epam.training.movie.theater.domain.Auditorium" >
+        <constructor-arg value="${green.name}"/>
+        <constructor-arg value="${green.seats}"/>
+        <constructor-arg ref="greenVipSeats"/>
+    </bean>
+
+    <util:list id="blueVipSeats">
+        <value>17</value>
+        <value>18</value>
+        <value>19</value>
+    </util:list>
+    
+    <bean id="blueAuditorium" 
+          class="com.epam.training.movie.theater.domain.Auditorium" >
+        <constructor-arg value="${blue.name}"/>
+        <constructor-arg value="${blue.seats}"/>
+        <constructor-arg ref="blueVipSeats"/>
+    </bean>
+
+    <bean id="auditoriumService" 
+          class="com.epam.training.movie.theater.dao.impl.AuditoriumDaoImpl" 
+          depends-on="redAuditorium, greenAuditorium, blueAuditorium">
+        <constructor-arg>
+            <map>
+                <entry>
+                    <key>
+                        <value>1</value>
+                    </key>
+                    <ref bean="redAuditorium"/>
+                </entry>
+                <entry>
+                    <key>
+                        <value>2</value>
+                    </key>
+                    <ref bean="greenAuditorium"/>
+                </entry>
+                <entry>
+                    <key>
+                        <value>3</value>
+                    </key>
+                    <ref bean="blueAuditorium"/>
+                </entry>
+            </map>
+        </constructor-arg>
+    </bean>
     
     <bean id="userDao" class="com.epam.training.movie.theater.dao.impl.UserDaoImpl"/>
     <bean id="ticketDao" class="com.epam.training.movie.theater.dao.impl.TicketDaoImpl"/>
+    <bean id="eventDao" class="com.epam.training.movie.theater.dao.impl.EventDaoImpl"/>
     
     <bean id="userService" class="com.epam.training.movie.theater.service.user.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
@@ -40,6 +117,17 @@
         </property>
     </bean>
     
-    <!--<bean id="priceCalculationService" class=""></bean>-->
+    <bean id="priceCalculationService" class="com.epam.training.movie.theater.service.price.PriceCalculationServiceImpl">
+        <property name="discountService" ref="discountService"/>
+        <property name="highRatingRate" value="${cost.rate.high.rated.movies}"/>
+        <property name="highRatingTreshold" value="${rating.high.treshold}"/>
+        <property name="vipSeatRate" value="${cost.rate.vip.seats}"/>
+    </bean>
+    
+    <bean id="boookingService" class="com.epam.training.movie.theater.service.booking.BookingServiceImpl">
+        <property name="priceCalculationService" ref="priceCalculationService"/>
+        <property name="ticketDao" ref="ticketDao"/>
+        <property name="eventDao" ref="eventDao"/>
+    </bean>
     
 </beans>

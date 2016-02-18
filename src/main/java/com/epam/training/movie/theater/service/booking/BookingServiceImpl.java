@@ -61,4 +61,16 @@ public class BookingServiceImpl implements BookingService {
         this.eventDao = eventDao;
     }
 
+    public PriceCalculationService getPriceCalculationService() {
+        return priceCalculationService;
+    }
+
+    public TicketDao getTicketDao() {
+        return ticketDao;
+    }
+
+    public EventDao getEventDao() {
+        return eventDao;
+    }
+
 }
