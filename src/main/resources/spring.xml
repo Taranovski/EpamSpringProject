@@ -135,5 +135,8 @@
     </bean>
     
     <bean id="counterAspect" class="com.epam.training.movie.theater.aspect.CounterAspect"/>
-    <bean id="luckyWinnerAspect" class="com.epam.training.movie.theater.aspect.LuckyWinnerAspect"/>
+    <bean id="luckyWinnerAspect" class="com.epam.training.movie.theater.aspect.LuckyWinnerAspect">
+        <property name="luckyWinnerChance" value="0.01"/>
+    </bean>
+    <bean id="discountAspect" class="com.epam.training.movie.theater.aspect.DiscountAspect"/>
 </beans>

@@ -7,7 +7,9 @@ package com.epam.training.movie.theater.service;
 
 import com.epam.training.movie.theater.domain.Event;
 import com.epam.training.movie.theater.domain.User;
+import com.epam.training.movie.theater.service.discount.strategy.DiscountStrategy;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  *
@@ -24,4 +26,5 @@ public interface DiscountService {
      */
     BigDecimal getDiscount(User user, Event event);
 
+    List<DiscountStrategy> getDiscountStrategies();
 }

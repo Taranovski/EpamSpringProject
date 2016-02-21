@@ -12,13 +12,17 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.annotation.Order;
 
 /**
  *
  * @author Alyx
  */
 @Aspect
+@Order(1)
 public class LuckyWinnerAspect {
+
+    private double luckyWinnerChance;
 
     @Pointcut("execution(* *.getDiscount(..))")
     private void discountPointcut() {
@@ -28,7 +32,7 @@ public class LuckyWinnerAspect {
     public Object countEventAccess(ProceedingJoinPoint proceedingJoinPoint) {
         try {
 
-            if (Math.random() > 0.5) {
+            if (Math.random() > 1 - luckyWinnerChance) {
                 return BigDecimal.ONE;
             }
             return proceedingJoinPoint.proceed();
@@ -39,4 +43,13 @@ public class LuckyWinnerAspect {
         }
 
     }
+
+    public double getLuckyWinnerChance() {
+        return luckyWinnerChance;
+    }
+
+    public void setLuckyWinnerChance(double luckyWinnerChance) {
+        this.luckyWinnerChance = luckyWinnerChance;
+    }
+
 }

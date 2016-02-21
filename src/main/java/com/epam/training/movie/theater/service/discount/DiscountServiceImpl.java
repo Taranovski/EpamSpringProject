@@ -11,7 +11,6 @@ import com.epam.training.movie.theater.domain.Event;
 import com.epam.training.movie.theater.domain.User;
 import java.math.BigDecimal;
 import java.util.List;
-import org.joda.time.DateTime;
 
 /**
  * Counts different discounts for purchased tickets
@@ -22,6 +21,7 @@ public class DiscountServiceImpl implements DiscountService {
 
     private List<DiscountStrategy> discountStrategies;
 
+    @Override
     public List<DiscountStrategy> getDiscountStrategies() {
         return discountStrategies;
     }

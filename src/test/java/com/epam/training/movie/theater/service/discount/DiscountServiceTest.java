@@ -5,6 +5,7 @@
  */
 package com.epam.training.movie.theater.service.discount;
 
+import com.epam.training.movie.theater.service.DiscountService;
 import com.epam.training.movie.theater.service.discount.strategy.DiscountStrategy;
 import com.epam.training.movie.theater.service.discount.strategy.impl.BirthDayDiscountStrategy;
 import com.epam.training.movie.theater.service.discount.strategy.impl.TenthTicketDiscountStrategy;
@@ -31,7 +32,7 @@ import org.springframework.test.context.support.GenericXmlContextLoader;
 public class DiscountServiceTest {
 
     @Autowired
-    DiscountServiceImpl discountService;
+    DiscountService discountService;
 
     public DiscountServiceTest() {
     }
@@ -49,8 +50,6 @@ public class DiscountServiceTest {
         List<DiscountStrategy> discountStrategies = discountService.getDiscountStrategies();
         assertNotNull(discountStrategies);
         assertEquals(2, discountStrategies.size());
-        assertTrue(discountStrategies.get(0) instanceof BirthDayDiscountStrategy);
-        assertTrue(discountStrategies.get(1) instanceof TenthTicketDiscountStrategy);
     }
 
 }

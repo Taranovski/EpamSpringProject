@@ -5,6 +5,7 @@
  */
 package com.epam.training.movie.theater.domain;
 
+import java.util.Objects;
 import org.joda.time.DateTime;
 
 /**
@@ -57,6 +58,40 @@ public class User {
 
     public void setRegistered(boolean registered) {
         this.registered = registered;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.name);
+        hash = 53 * hash + Objects.hashCode(this.email);
+        hash = 53 * hash + Objects.hashCode(this.birthDay);
+        hash = 53 * hash + (this.registered ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.birthDay, other.birthDay)) {
+            return false;
+        }
+        if (this.registered != other.registered) {
+            return false;
+        }
+        return true;
     }
 
 }
