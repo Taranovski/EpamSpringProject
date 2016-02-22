@@ -22,6 +22,7 @@
                 <value>classpath:auditorium/green.properties</value>
                 <value>classpath:auditorium/blue.properties</value>
                 <value>classpath:pricing.properties</value>
+                <value>classpath:db.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="true" />
@@ -139,4 +140,21 @@
         <property name="luckyWinnerChance" value="0.01"/>
     </bean>
     <bean id="discountAspect" class="com.epam.training.movie.theater.aspect.DiscountAspect"/>
+    
+    
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+    </bean>
+    
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" depends-on="dataSource">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="userDaoDb" class="com.epam.training.movie.theater.dao.db.UserDaoDbImpl" init-method="init" depends-on="jdbcTemplate">
+        <constructor-arg ref="jdbcTemplate"/>
+    </bean>
 </beans>
