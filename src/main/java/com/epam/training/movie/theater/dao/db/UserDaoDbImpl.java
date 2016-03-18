@@ -20,7 +20,7 @@ public class UserDaoDbImpl implements UserDao {
     private JdbcTemplate jdbcTemplate;
     private AtomicLong counter = new AtomicLong(1L);
 
-    private void init() {
+    public void init() {
         jdbcTemplate.execute("create table \"users\" ("
                 + "id INTEGER, "
                 + "name VARCHAR(50), "
@@ -28,11 +28,15 @@ public class UserDaoDbImpl implements UserDao {
                 + "birthDay DATE)");
     }
 
+    public void destroy() {
+        jdbcTemplate.execute("drop table \"users\"");
+    }
+
     public UserDaoDbImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    final RowMapper<User> rowMapper = new RowMapper<User>() {
+    final static RowMapper<User> rowMapper = new RowMapper<User>() {
 
         @Override
         public User mapRow(ResultSet resultSet, int arg1) throws SQLException {

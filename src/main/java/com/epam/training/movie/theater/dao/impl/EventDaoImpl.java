@@ -9,15 +9,15 @@ import com.epam.training.movie.theater.domain.Event;
 import com.epam.training.movie.theater.dao.EventDao;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import org.joda.time.DateTime;
 
 public class EventDaoImpl implements EventDao {
 
-    Map<Long, Event> events = new HashMap<>();
+    Map<Long, Event> events = new ConcurrentHashMap<>();
     AtomicLong counter = new AtomicLong();
 
     @Override
@@ -30,7 +30,7 @@ public class EventDaoImpl implements EventDao {
 
     @Override
     public void remove(Event event) {
-        events.remove(event.getId(), event);
+        events.remove(event.getId());
     }
 
     @Override

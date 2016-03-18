@@ -72,7 +72,7 @@
           depends-on="redAuditorium, greenAuditorium, blueAuditorium">
         <constructor-arg>
             <map>
-                <entry>
+                <entry >
                     <key>
                         <value>1</value>
                     </key>
@@ -154,7 +154,7 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="userDaoDb" class="com.epam.training.movie.theater.dao.db.UserDaoDbImpl" init-method="init" depends-on="jdbcTemplate">
+    <bean id="userDaoDb" class="com.epam.training.movie.theater.dao.db.UserDaoDbImpl" init-method="init" depends-on="jdbcTemplate" destroy-method="destroy">
         <constructor-arg ref="jdbcTemplate"/>
     </bean>
 </beans>
