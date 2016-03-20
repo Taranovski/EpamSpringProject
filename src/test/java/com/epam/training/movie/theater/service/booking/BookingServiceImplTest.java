@@ -5,6 +5,7 @@
  */
 package com.epam.training.movie.theater.service.booking;
 
+import com.epam.training.movie.theater.BaseTest;
 import com.epam.training.movie.theater.dao.AuditoriumDao;
 import com.epam.training.movie.theater.dao.EventDao;
 import com.epam.training.movie.theater.dao.TicketDao;
@@ -29,12 +30,12 @@ import org.springframework.test.context.support.GenericXmlContextLoader;
  *
  * @author Alyx
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-        locations = {"/spring.xml"},
-        loader = GenericXmlContextLoader.class
-)
-public class BookingServiceImplTest {
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(
+//        locations = {"/test-MovieTheatre-servlet.xml"},
+//        loader = GenericXmlContextLoader.class
+//)
+public class BookingServiceImplTest extends BaseTest {
 
     @Autowired
     BookingServiceImpl bookingServiceImpl;

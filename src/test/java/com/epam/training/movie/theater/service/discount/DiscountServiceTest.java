@@ -5,10 +5,10 @@
  */
 package com.epam.training.movie.theater.service.discount;
 
+import com.epam.training.movie.theater.BaseTest;
 import com.epam.training.movie.theater.service.DiscountService;
 import com.epam.training.movie.theater.service.discount.strategy.DiscountStrategy;
-import com.epam.training.movie.theater.service.discount.strategy.impl.BirthDayDiscountStrategy;
-import com.epam.training.movie.theater.service.discount.strategy.impl.TenthTicketDiscountStrategy;
+
 import java.util.List;
 import org.junit.After;
 import org.junit.Before;
@@ -24,12 +24,12 @@ import org.springframework.test.context.support.GenericXmlContextLoader;
  *
  * @author Alyx
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-        locations = {"/spring.xml"},
-        loader = GenericXmlContextLoader.class
-)
-public class DiscountServiceTest {
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(
+//        locations = {"/test-MovieTheatre-servlet.xml"},
+//        loader = GenericXmlContextLoader.class
+//)
+public class DiscountServiceTest extends BaseTest {
 
     @Autowired
     DiscountService discountService;

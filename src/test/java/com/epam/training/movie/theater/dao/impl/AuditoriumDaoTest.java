@@ -5,6 +5,7 @@
  */
 package com.epam.training.movie.theater.dao.impl;
 
+import com.epam.training.movie.theater.BaseTest;
 import com.epam.training.movie.theater.domain.Auditorium;
 import java.util.List;
 import org.junit.After;
@@ -21,12 +22,12 @@ import org.springframework.test.context.support.GenericXmlContextLoader;
  *
  * @author Alyx
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-        locations = {"/spring.xml"},
-        loader = GenericXmlContextLoader.class
-)
-public class AuditoriumDaoTest {
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(
+//        locations = {"/test-MovieTheatre-servlet.xml"},
+//        loader = GenericXmlContextLoader.class
+//)
+public class AuditoriumDaoTest extends BaseTest {
 
     @Autowired
     AuditoriumDaoImpl auditoriumService;

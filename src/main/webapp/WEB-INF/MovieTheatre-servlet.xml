@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+ 		http://www.springframework.org/schema/util
+ 		http://www.springframework.org/schema/util/spring-util-3.2.xsd
+                http://www.springframework.org/schema/aop
+                http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd
+                http://www.springframework.org/schema/mvc
+                http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <aop:aspectj-autoproxy/>
+
+    <mvc:annotation-driven/>
+    <!--<context:annotation-config/>-->
+    <!-- Support for @Controller -->
+    <context:component-scan base-package="com.epam.training.movie.theater"/>
+
+
+    <!-- Resolves view names to protected .jsp resources within the 'views/' directory -->
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="prefix" value="views/"/>-->
+        <!--<property name="suffix" value=".jsp"/>-->
+    <!--</bean>-->
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:auditorium/red.properties</value>
+                <value>classpath:auditorium/green.properties</value>
+                <value>classpath:auditorium/blue.properties</value>
+                <value>classpath:pricing.properties</value>
+                <value>classpath:db.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true"/>
+    </bean>
+
+    <util:list id="redVipSeats">
+        <value>1</value>
+        <value>2</value>
+        <value>3</value>
+    </util:list>
+
+    <bean id="redAuditorium"
+          class="com.epam.training.movie.theater.domain.Auditorium">
+        <constructor-arg value="${red.name}"/>
+        <constructor-arg value="${red.seats}"/>
+        <constructor-arg ref="redVipSeats"/>
+    </bean>
+
+    <util:list id="greenVipSeats">
+        <value>7</value>
+        <value>8</value>
+        <value>9</value>
+    </util:list>
+
+    <bean id="greenAuditorium"
+          class="com.epam.training.movie.theater.domain.Auditorium">
+        <constructor-arg value="${green.name}"/>
+        <constructor-arg value="${green.seats}"/>
+        <constructor-arg ref="greenVipSeats"/>
+    </bean>
+
+    <util:list id="blueVipSeats">
+        <value>17</value>
+        <value>18</value>
+        <value>19</value>
+    </util:list>
+
+    <bean id="blueAuditorium"
+          class="com.epam.training.movie.theater.domain.Auditorium">
+        <constructor-arg value="${blue.name}"/>
+        <constructor-arg value="${blue.seats}"/>
+        <constructor-arg ref="blueVipSeats"/>
+    </bean>
+
+    <bean id="auditoriumService"
+          class="com.epam.training.movie.theater.dao.impl.AuditoriumDaoImpl"
+          depends-on="redAuditorium, greenAuditorium, blueAuditorium">
+        <constructor-arg>
+            <map>
+                <entry>
+                    <key>
+                        <value>1</value>
+                    </key>
+                    <ref bean="redAuditorium"/>
+                </entry>
+                <entry>
+                    <key>
+                        <value>2</value>
+                    </key>
+                    <ref bean="greenAuditorium"/>
+                </entry>
+                <entry>
+                    <key>
+                        <value>3</value>
+                    </key>
+                    <ref bean="blueAuditorium"/>
+                </entry>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="userDao" class="com.epam.training.movie.theater.dao.impl.UserDaoImpl"/>
+    <bean id="ticketDao" class="com.epam.training.movie.theater.dao.impl.TicketDaoImpl"/>
+    <bean id="eventDao" class="com.epam.training.movie.theater.dao.impl.EventDaoImpl"/>
+
+    <bean id="userService" class="com.epam.training.movie.theater.service.user.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="ticketDao" ref="ticketDao"/>
+    </bean>
+
+    <bean id="birthDayDiscountStrategy"
+          class="com.epam.training.movie.theater.service.discount.strategy.impl.BirthDayDiscountStrategy"/>
+
+    <bean id="tenthTicketDiscountStrategy"
+          class="com.epam.training.movie.theater.service.discount.strategy.impl.TenthTicketDiscountStrategy">
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean id="discountService"
+          class="com.epam.training.movie.theater.service.discount.DiscountServiceImpl"
+          depends-on="birthDayDiscountStrategy, tenthTicketDiscountStrategy">
+        <property name="discountStrategies">
+            <list>
+                <ref bean="birthDayDiscountStrategy"/>
+                <ref bean="tenthTicketDiscountStrategy"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="priceCalculationService"
+          class="com.epam.training.movie.theater.service.price.PriceCalculationServiceImpl">
+        <property name="discountService" ref="discountService"/>
+        <property name="highRatingRate" value="${cost.rate.high.rated.movies}"/>
+        <property name="highRatingTreshold" value="${rating.high.treshold}"/>
+        <property name="vipSeatRate" value="${cost.rate.vip.seats}"/>
+    </bean>
+
+    <bean id="boookingService" class="com.epam.training.movie.theater.service.booking.BookingServiceImpl">
+        <property name="priceCalculationService" ref="priceCalculationService"/>
+        <property name="ticketDao" ref="ticketDao"/>
+        <property name="eventDao" ref="eventDao"/>
+    </bean>
+
+    <bean id="counterAspect" class="com.epam.training.movie.theater.aspect.CounterAspect"/>
+    <bean id="luckyWinnerAspect" class="com.epam.training.movie.theater.aspect.LuckyWinnerAspect">
+        <property name="luckyWinnerChance" value="0.01"/>
+    </bean>
+    <bean id="discountAspect" class="com.epam.training.movie.theater.aspect.DiscountAspect"/>
+
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" depends-on="dataSource">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="userDaoDb" class="com.epam.training.movie.theater.dao.db.UserDaoDbImpl" init-method="init"
+          depends-on="jdbcTemplate" destroy-method="destroy">
+        <constructor-arg ref="jdbcTemplate"/>
+    </bean>
+</beans>

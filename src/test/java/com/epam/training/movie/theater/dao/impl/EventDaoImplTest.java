@@ -5,6 +5,7 @@
  */
 package com.epam.training.movie.theater.dao.impl;
 
+import com.epam.training.movie.theater.BaseTest;
 import com.epam.training.movie.theater.aspect.CounterAspect;
 import com.epam.training.movie.theater.dao.EventDao;
 import com.epam.training.movie.theater.domain.Event;
@@ -21,12 +22,12 @@ import org.springframework.test.context.support.GenericXmlContextLoader;
  *
  * @author Alyx
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-        locations = {"/spring.xml"},
-        loader = GenericXmlContextLoader.class
-)
-public class EventDaoImplTest {
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(
+//        locations = {"/test-MovieTheatre-servlet.xml"},
+//        loader = GenericXmlContextLoader.class
+//)
+public class EventDaoImplTest extends BaseTest {
 
     @Autowired
     EventDao eventDaoImpl;

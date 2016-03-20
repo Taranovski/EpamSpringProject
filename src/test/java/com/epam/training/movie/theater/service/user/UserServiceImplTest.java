@@ -5,6 +5,7 @@
  */
 package com.epam.training.movie.theater.service.user;
 
+import com.epam.training.movie.theater.BaseTest;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
@@ -17,12 +18,12 @@ import org.springframework.test.context.support.GenericXmlContextLoader;
  *
  * @author Alyx
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(
-        locations = {"/spring.xml"},
-        loader = GenericXmlContextLoader.class
-)
-public class UserServiceImplTest {
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(
+//        locations = {"/test-MovieTheatre-servlet.xml"},
+//        loader = GenericXmlContextLoader.class
+//)
+public class UserServiceImplTest extends BaseTest {
 
     @Autowired
     UserServiceImpl userService;

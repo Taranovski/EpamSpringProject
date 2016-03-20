@@ -7,13 +7,14 @@ package com.epam.training.movie.theater.dao.db;
 
 import com.epam.training.movie.theater.dao.UserDao;
 import com.epam.training.movie.theater.domain.User;
+import org.joda.time.DateTime;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicLong;
-import org.joda.time.DateTime;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 public class UserDaoDbImpl implements UserDao {
 
@@ -21,15 +22,23 @@ public class UserDaoDbImpl implements UserDao {
     private AtomicLong counter = new AtomicLong(1L);
 
     public void init() {
-        jdbcTemplate.execute("create table \"users\" ("
-                + "id INTEGER, "
-                + "name VARCHAR(50), "
-                + "email VARCHAR(100), "
-                + "birthDay DATE)");
+        try {
+            jdbcTemplate.execute("create table \"users\" ("
+                    + "id INTEGER, "
+                    + "name VARCHAR(50), "
+                    + "email VARCHAR(100), "
+                    + "birthDay DATE)");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public void destroy() {
-        jdbcTemplate.execute("drop table \"users\"");
+        try {
+            jdbcTemplate.execute("drop table \"users\"");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public UserDaoDbImpl(JdbcTemplate jdbcTemplate) {
