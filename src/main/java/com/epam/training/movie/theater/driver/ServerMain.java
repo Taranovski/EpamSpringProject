@@ -1,6 +1,7 @@
 package com.epam.training.movie.theater.driver;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
@@ -24,7 +25,86 @@ public class ServerMain {
 
         server.setHandler(root);
 
+//        org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+
         server.start();
         server.join();
+    }
+
+    private static class NoLogging implements Logger {
+        @Override
+        public String getName() {
+            return "no";
+        }
+
+        @Override
+        public void warn(String s, Object... objects) {
+
+        }
+
+        @Override
+        public void warn(Throwable throwable) {
+
+        }
+
+        @Override
+        public void warn(String s, Throwable throwable) {
+
+        }
+
+        @Override
+        public void info(String s, Object... objects) {
+
+        }
+
+        @Override
+        public void info(Throwable throwable) {
+
+        }
+
+        @Override
+        public void info(String s, Throwable throwable) {
+
+        }
+
+        @Override
+        public boolean isDebugEnabled() {
+            return false;
+        }
+
+        @Override
+        public void setDebugEnabled(boolean b) {
+
+        }
+
+        @Override
+        public void debug(String s, Object... objects) {
+
+        }
+
+        @Override
+        public void debug(String s, long l) {
+
+        }
+
+        @Override
+        public void debug(Throwable throwable) {
+
+        }
+
+        @Override
+        public void debug(String s, Throwable throwable) {
+
+        }
+
+        @Override
+        public Logger getLogger(String s) {
+            return null;
+        }
+
+        @Override
+        public void ignore(Throwable throwable) {
+
+        }
     }
 }

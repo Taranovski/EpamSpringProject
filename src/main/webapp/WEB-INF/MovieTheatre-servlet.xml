@@ -18,16 +18,71 @@
 
     <aop:aspectj-autoproxy/>
 
-    <mvc:annotation-driven/>
-    <!--<context:annotation-config/>-->
-    <!-- Support for @Controller -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/>
+        </mvc:message-converters>
+
+    </mvc:annotation-driven>
     <context:component-scan base-package="com.epam.training.movie.theater"/>
 
+    <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="jacksonMessageConverter"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath">
+            <value>/</value>
+        </property>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="prefix">
+            <value>/WEB-INF/velocity/</value>
+        </property>
+        <property name="suffix">
+            <value>.vm</value>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1"/>
+        <property name="mediaTypes" >
+            <map>
+                <entry key="html" value="text/html"/>
+                <entry key="json" value="application/json"/>
+            </map>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="simpleMappingExceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+
+        <property name="order" value="2"/>
+        <!--<property name="exceptionMappings">-->
+        <!--<map>-->
+        <!--<entry key="Exception" value="exception"/>-->
+        <!--</map>-->
+        <!--</property>-->
+        <property name="defaultErrorView" value="errorPage"/>
+        <property name="exceptionAttribute" value="errorMessage"/>
+    </bean>
 
     <!-- Resolves view names to protected .jsp resources within the 'views/' directory -->
     <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-        <!--<property name="prefix" value="views/"/>-->
-        <!--<property name="suffix" value=".jsp"/>-->
+    <!--<property name="prefix" value="views/"/>-->
+    <!--<property name="suffix" value=".jsp"/>-->
     <!--</bean>-->
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -174,4 +229,16 @@
           depends-on="jdbcTemplate" destroy-method="destroy">
         <constructor-arg ref="jdbcTemplate"/>
     </bean>
+
+    <bean id="eventService" class="com.epam.training.movie.theater.service.EventService">
+        <property name="eventDao" ref="eventDao"/>
+    </bean>
+
+    <bean id="initializer" class="com.epam.training.movie.theater.driver.Initializer" init-method="initialize">
+        <property name="auditoriumDao" ref="auditoriumService"/>
+        <property name="eventDao" ref="eventDao"/>
+        <property name="movieDao" ref="movieDao"/>
+    </bean>
+
+    <bean id="movieDao" class="com.epam.training.movie.theater.dao.MovieDao"/>
 </beans>

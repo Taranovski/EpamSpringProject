@@ -5,12 +5,16 @@
  */
 package com.epam.training.movie.theater.domain;
 
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.math.BigDecimal;
 
 /**
  *
  * @author Alyx
  */
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Movie {
 
     private Long id;

@@ -17,8 +17,18 @@ import org.joda.time.DateTime;
 
 public class EventDaoImpl implements EventDao {
 
-    Map<Long, Event> events = new ConcurrentHashMap<>();
-    AtomicLong counter = new AtomicLong();
+    Map<Long, Event> events;
+    AtomicLong counter;
+
+    public EventDaoImpl() {
+        events = new ConcurrentHashMap<>();
+        counter = new AtomicLong();
+    }
+
+    public void fill(Map<Long, Event> events) {
+        this.events = new ConcurrentHashMap<>(events);
+        counter = new AtomicLong(events.size());
+    }
 
     @Override
     public Event create(Event event) {
