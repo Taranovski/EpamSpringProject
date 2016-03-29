@@ -27,4 +27,10 @@ public class MoviesController {
     public List<Movie> getAllMovies(){
         return movieDao.getAllMovies();
     }
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.TEXT_HTML, headers = "Accept=text/html")
+    @ResponseBody
+    public List<Movie> getAllMovies1(){
+        return movieDao.getAllMovies();
+    }
 }
