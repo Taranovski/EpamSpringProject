@@ -37,28 +37,17 @@
     </bean>
 
     <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <property name="resourceLoaderPath">
-            <value>/</value>
-        </property>
+        <property name="resourceLoaderPath" value="/"/>
     </bean>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
-        <property name="prefix">
-            <value>/WEB-INF/velocity/</value>
-        </property>
-        <property name="suffix">
-            <value>.vm</value>
-        </property>
+        <property name="prefix" value="/WEB-INF/velocity/"/>
+        <property name="suffix" value=".vm"/>
     </bean>
 
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-        <property name="order" value="1"/>
-        <property name="mediaTypes" >
-            <map>
-                <entry key="html" value="text/html"/>
-                <entry key="json" value="application/json"/>
-            </map>
-        </property>
+        <property name="order" value="2"/>
+        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
         <property name="defaultViews">
             <list>
                 <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
@@ -69,21 +58,10 @@
     <bean id="simpleMappingExceptionResolver"
           class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 
-        <property name="order" value="2"/>
-        <!--<property name="exceptionMappings">-->
-        <!--<map>-->
-        <!--<entry key="Exception" value="exception"/>-->
-        <!--</map>-->
-        <!--</property>-->
+        <property name="order" value="3"/>
         <property name="defaultErrorView" value="errorPage"/>
         <property name="exceptionAttribute" value="errorMessage"/>
     </bean>
-
-    <!-- Resolves view names to protected .jsp resources within the 'views/' directory -->
-    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-    <!--<property name="prefix" value="views/"/>-->
-    <!--<property name="suffix" value=".jsp"/>-->
-    <!--</bean>-->
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
@@ -142,24 +120,9 @@
           depends-on="redAuditorium, greenAuditorium, blueAuditorium">
         <constructor-arg>
             <map>
-                <entry>
-                    <key>
-                        <value>1</value>
-                    </key>
-                    <ref bean="redAuditorium"/>
-                </entry>
-                <entry>
-                    <key>
-                        <value>2</value>
-                    </key>
-                    <ref bean="greenAuditorium"/>
-                </entry>
-                <entry>
-                    <key>
-                        <value>3</value>
-                    </key>
-                    <ref bean="blueAuditorium"/>
-                </entry>
+                <entry key="1" value-ref="redAuditorium"/>
+                <entry key="2" value-ref="greenAuditorium"/>
+                <entry key="3" value-ref="blueAuditorium"/>
             </map>
         </constructor-arg>
     </bean>
@@ -234,11 +197,33 @@
         <property name="eventDao" ref="eventDao"/>
     </bean>
 
-    <bean id="initializer" class="com.epam.training.movie.theater.driver.Initializer" init-method="initialize">
+    <bean id="initializer" class="com.epam.training.movie.theater.driver.Initializer" init-method="initialize" depends-on="auditoriumService">
         <property name="auditoriumDao" ref="auditoriumService"/>
         <property name="eventDao" ref="eventDao"/>
         <property name="movieDao" ref="movieDao"/>
     </bean>
 
     <bean id="movieDao" class="com.epam.training.movie.theater.dao.MovieDao"/>
+
+    <bean id="resourceBundleViewResolver"
+          class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+        <property name="basename" value="views"/>
+        <property name="order" value="1"/>
+    </bean>
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManager">
+        <constructor-arg name="strategies">
+            <list>
+                <bean class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
+                    <constructor-arg name="mediaTypes">
+                        <map>
+                            <entry key="html" value="text/html"/>
+                            <entry key="json" value="application/json"/>
+                            <entry key="pdf" value="application/pdf"/>
+                        </map>
+                    </constructor-arg>
+                </bean>
+            </list>
+
+        </constructor-arg>
+    </bean>
 </beans>

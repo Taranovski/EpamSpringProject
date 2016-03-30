@@ -1,12 +1,12 @@
 {
   "movies":[
-    {"name":"saw", "rating":9},
-    {"name":"no country for old man", "rating":10},
-    {"name":"dead space", "rating":8}
+    {"name":"saw", "rating":"9"},
+    {"name":"no country for old man", "rating":"10"},
+    {"name":"dead space", "rating":"8"}
   ],
   "events":[
-    {"auditorium":"Red Blood", "movie":"saw", "startTime":1234567, "endTime":2345678, "basePrice":100},
-    {"auditorium":"Blue Sky", "movie":"no country for old man", "startTime":1244567, "endTime":2375678, "basePrice":120},
-    {"auditorium":"Green Grass", "movie":"dead space", "startTime":1834567, "endTime":2945678, "basePrice":90}
+    {"auditorium":"Red blood", "movie":"saw", "startTime":"1234567", "endTime":"2345678", "basePrice":"100"},
+    {"auditorium":"Blue sky", "movie":"no country for old man", "startTime":"1244567", "endTime":"2375678", "basePrice":"120"},
+    {"auditorium":"Green grass", "movie":"dead space", "startTime":"1834567", "endTime":"2945678", "basePrice":"90"}
   ]
 }

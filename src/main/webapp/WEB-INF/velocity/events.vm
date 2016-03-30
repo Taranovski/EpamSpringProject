@@ -1,3 +1,23 @@
 all events
 
-${events}
+<table border="1">
+<tr>
+    <td>movie name</td>
+    <td>rating</td>
+    <td>auditorium</td>
+    <td>start</td>
+    <td>end</td>
+    <td>base price</td>
+</tr>
+
+#foreach( $event in $events )
+<tr>
+    <td>$event.movie.name</td>
+    <td>$event.movie.rating</td>
+    <td>$event.auditorium.name</td>
+    <td>$event.getStartDate()</td>
+    <td>$event.endDate.toString()</td>
+    <td>$event.basePrice</td>
+</tr>
+#end
+</table>
