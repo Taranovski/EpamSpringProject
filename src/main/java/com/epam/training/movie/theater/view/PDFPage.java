@@ -34,7 +34,7 @@ public class PDFPage extends AbstractView {
     ) throws Exception {
         List words = (List) model.get("events");
         for (int i = 0; i < words.size(); i++) {
-            document.add(new Paragraph((String) words.get(i)));
+            document.add(new Paragraph(words.get(i).toString()));
         }
     }
 

@@ -69,4 +69,15 @@ public class Event {
         this.basePrice = basePrice;
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", auditorium=" + auditorium +
+                ", movie=" + movie +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", basePrice=" + basePrice +
+                '}';
+    }
 }

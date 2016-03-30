@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import java.math.BigDecimal;
 
 /**
- *
  * @author Alyx
  */
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
@@ -45,4 +44,12 @@ public class Movie {
         this.rating = rating;
     }
 
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rating=" + rating +
+                '}';
+    }
 }

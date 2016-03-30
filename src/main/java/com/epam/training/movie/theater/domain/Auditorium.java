@@ -68,4 +68,15 @@ public class Auditorium {
     public boolean isVipSeat(int seat) {
         return vipSeats.containsKey(seat);
     }
+
+    @Override
+    public String toString() {
+        return "Auditorium{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
+                ", vipSeats=" + vipSeats +
+                ", seats=" + seats +
+                '}';
+    }
 }
