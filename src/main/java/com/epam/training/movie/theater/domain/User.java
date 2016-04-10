@@ -5,6 +5,7 @@
  */
 package com.epam.training.movie.theater.domain;
 
+import java.util.List;
 import java.util.Objects;
 import org.joda.time.DateTime;
 
@@ -19,6 +20,8 @@ public class User {
     private String email;
     private DateTime birthDay;
     private boolean registered;
+    private List<Role> roles;
+    private String password;
 
     public DateTime getBirthDay() {
         return birthDay;
@@ -58,6 +61,22 @@ public class User {
 
     public void setRegistered(boolean registered) {
         this.registered = registered;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

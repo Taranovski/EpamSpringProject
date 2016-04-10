@@ -12,6 +12,13 @@ public class ServerMain {
 
     public static void main(String args[]) throws Exception {
 
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("shutdown, here in memory db should be cleaned, do not know how yet");
+            }
+        }));
+
         String webappDirLocation = "src/main/webapp/";
 
         Server server = new Server(8080);
@@ -24,8 +31,6 @@ public class ServerMain {
         root.setParentLoaderPriority(true);
 
         server.setHandler(root);
-
-//        org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
 
         server.start();
         server.join();
