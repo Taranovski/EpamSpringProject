@@ -33,8 +33,11 @@
     </mvc:annotation-driven>
     <context:component-scan base-package="com.epam.training.movie.theater"/>
 
-    <security:http auto-config="true">
-        <security:intercept-url pattern="/**" access="ROLE_USER" />
+    <security:http auto-config="true" use-expressions="true">
+        <security:intercept-url pattern="/events*" access="hasAuthority('REGISTERED_USER')" />
+        <security:intercept-url pattern="/movies/all*" access="hasAuthority('BOOKING_MANAGER')"/>
+        <security:remember-me data-source-ref="dataSource"/>
+        <security:logout invalidate-session="true" logout-url="/logout"/>
     </security:http>
 
     <security:authentication-manager alias="authenticationManager">
@@ -51,6 +54,7 @@
 
     <bean id="jacksonMessageConverter"
           class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
             <list>
@@ -63,12 +67,11 @@
         <property name="resourceLoaderPath" value="/"/>
     </bean>
 
-    <bean id="viewResolver2" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+    <bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
         <property name="prefix" value="/WEB-INF/velocity/"/>
         <property name="suffix" value=".vm"/>
-        <property name="order" value="1"/>
+        <property name="order" value="2"/>
     </bean>
-
 
     <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManager">
         <constructor-arg name="strategies">
@@ -77,7 +80,6 @@
                     <constructor-arg name="mediaTypes">
                         <map>
                             <entry key="html" value="text/html"/>
-                            <entry key="jsp" value="text/html"/>
                             <entry key="json" value="application/json"/>
                             <entry key="pdf" value="application/pdf"/>
                         </map>
@@ -88,7 +90,7 @@
     </bean>
 
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-        <property name="order" value="3"/>
+        <property name="order" value="1"/>
         <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
         <property name="defaultViews">
             <list>
@@ -246,6 +248,7 @@
         <property name="eventDao" ref="eventDao"/>
         <property name="movieDao" ref="movieDao"/>
         <property name="userDao" ref="userDaoDb"/>
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     <bean id="authenticationProvider" class="com.epam.training.movie.theater.security.AuthenticationProvider"
           depends-on="userDaoDb">

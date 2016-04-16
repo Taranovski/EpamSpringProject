@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -29,8 +29,11 @@ public class MoviesController {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.TEXT_HTML, headers = "Accept=text/html")
-    @ResponseBody
-    public List<Movie> getAllMovies1(){
-        return movieDao.getAllMovies();
+    public ModelAndView getAllMovies1(){
+        List<Movie> allMovies = movieDao.getAllMovies();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("movies");
+        modelAndView.addObject("movies", allMovies);
+        return modelAndView;
     }
 }

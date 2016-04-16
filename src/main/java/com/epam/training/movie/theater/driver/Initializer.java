@@ -5,8 +5,12 @@ import com.epam.training.movie.theater.dao.EventDao;
 import com.epam.training.movie.theater.dao.MovieDao;
 import com.epam.training.movie.theater.dao.UserDao;
 import com.epam.training.movie.theater.domain.*;
+import com.epam.training.movie.theater.security.CustomPasswordEncoder;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,15 +28,36 @@ public class Initializer {
     private MovieDao movieDao;
     private AuditoriumDao auditoriumDao;
     private UserDao userDao;
+    private JdbcTemplate jdbcTemplate;
 
     public void initialize() throws IOException {
         Map initialData = getInitializationData();
 
         initializeMovies(initialData);
-
         initializeEvents(initialData);
-
         initializeUsers(initialData);
+
+        initializeTables();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void initializeTables() {
+        try {
+            jdbcTemplate.update("drop table persistent_logins");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        try {
+            jdbcTemplate.update(
+                    "create table persistent_logins (" +
+                            "username varchar(64) not null, " +
+                            "series varchar(64) primary key, " +
+                            "token varchar(64) not null, " +
+                            "last_used timestamp not null)"
+            );
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     /**
@@ -52,10 +77,9 @@ public class Initializer {
             newUserToSave.setBirthDay(birthday);
             newUserToSave.setRegistered(true);
 
-            String userName = newUserToSave.getName();
             String userOpenPassword = (String) user.get("password");
 
-            newUserToSave.setPassword(getCipheredPassword(userName, userOpenPassword));
+            newUserToSave.setPassword(getCipheredPassword(userOpenPassword));
 
             List<String> roles = (List<String>) user.get("roles");
             List<Role> roleList = new ArrayList<>();
@@ -71,9 +95,9 @@ public class Initializer {
 
     }
 
-    private String getCipheredPassword(String userName, String userOpenPassword) {
-//        return userName + (userName + userOpenPassword + userName).hashCode();
-        return userOpenPassword;
+    private String getCipheredPassword(String userOpenPassword) {
+        CustomPasswordEncoder customPasswordEncoder = new CustomPasswordEncoder();
+        return customPasswordEncoder.encode(userOpenPassword);
     }
 
     /**
@@ -147,5 +171,9 @@ public class Initializer {
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 }

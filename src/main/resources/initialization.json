@@ -10,7 +10,7 @@
     {"auditorium":"Green grass", "movie":"dead space", "startTime":"1834567", "endTime":"2945678", "basePrice":"90"}
   ],
   "users":[
-    {"name":"alex", "email":"alex@mail.com", "birthday":"1234568", "roles":["ROLE_USER"], "password":"111"},
+    {"name":"alex", "email":"alex@mail.com", "birthday":"1234568", "roles":["REGISTERED_USER"], "password":"111"},
     {"name":"alyx", "email":"alyx@mail.com", "birthday":"2345679", "roles":["BOOKING_MANAGER"], "password":"222"}
   ]
 }

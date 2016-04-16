@@ -1,0 +1,15 @@
+all movies
+
+<table border="1">
+<tr>
+    <td>movie name</td>
+    <td>rating</td>
+</tr>
+
+#foreach( $movie in $movies )
+<tr>
+    <td>$movie.name</td>
+    <td>$movie.rating</td>
+</tr>
+#end
+</table>
